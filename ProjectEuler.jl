@@ -227,35 +227,33 @@ end
 function is_pythagorean(n)
     is_p = false
     c = n
-    tup = (0,0,c)
+    tups = [(0,0,c)]
     for b = 1:n
         for a = 1:b
             if (c^2 == (a^2 + b^2))
                 is_p = true
-                tup = (a,b,c)
+                push!(tups,(a,b,c))
             end
         end
     end
-    is_p, tup
+    is_p, tups
 end
 
 print(is_pythagorean(100))
 
 function prob9()
+    result = 1
     for i in Iterators.reverse(1:1000)
-        is_p, tup = is_pythagorean(i)
+        is_p, tups = is_pythagorean(i)
         if (is_p)
-            print(tup, sum(tup), "\n")
-            if sum(tup) == 1000
-                print(tup)
-                sum(tup)
-                print("TRUE")
-                print("----------------------------", prod(tup), "----------------------------")
-                break
+            for tup in tups
+                if sum(tup) == 1000
+                    result = prod(tup)
+                end
             end
         end
-        prod(tup)
     end
+    result
 end
 
-prob9()
+print(prob9())
