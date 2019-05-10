@@ -36,6 +36,9 @@ print(prob2())
 # ------------------------------------------------------------------------------
 
 function isPrime(n)
+    """
+    Determines if n is a prime
+    """
     prime = true
     for i = 2:sqrt(n)
         d = n / i
@@ -50,6 +53,9 @@ end
 isPrime(9990)
 
 function genPrimes(n)
+    """
+    Generates all primes below and including n
+    """
     primes = [2,3]
     for i = 4:n
         if (isPrime(i))
@@ -66,24 +72,26 @@ function prob3(n)
     """
     prime factors
     """
-    primes = genPrimes(sqrt(n))
-    d = 1
-    # print(primes)
 
-    # print(n, " ")
+    #get all the primes
+    primes = genPrimes(sqrt(n))
+    cur = 1
+
     results = []
-    while !in(Int(d), primes)
-        d = n / 2
+    # Loop while current number is not a prime
+    while !in(Int(cur), primes)
+        cur = n / 2
         i = 1
-        while d != round(d)
-            # print("|", primes[i], "|")
-            d = n / primes[i]
+        # divide n by prime number until it divides evenly
+        while cur != round(cur)
+            cur = n / primes[i]
             i += 1
         end
-        # print(primes[i-1],"ddd")
+        # the prime divides the current number evenly so add it to prime factors
         append!(results, primes[i-1])
-        # print(d, "d")
-        n = d
+
+        #update the new number to current number
+        n = cur
     end
     append!(results, n)
     results
@@ -96,8 +104,13 @@ print(n)
 # ------------------------------------------------------------------------------
 
 function isPalendrome(n)
+    """
+    Checks if number is palendrome
+    """
     str = string(n)
     l = length(str)
+
+    # if the number is of even length
     if length(str) % 2 == 0
         pal = true
         for i = 1:Int(l/2)
@@ -106,6 +119,7 @@ function isPalendrome(n)
                 return pal
             end
         end
+    # number is of odd length
     else
         pal = true
         for i = 1:Int((l-1)/2)
@@ -120,11 +134,13 @@ end
 
 isPalendrome(9889)
 
-
-function prob4()
+function prob4(n=999)
+    """
+    Finds largest lapendrome made from the product of two 3-digit numbers
+    """
     max = 0
-    for i in Iterators.reverse(100:999)
-        for j in Iterators.reverse(100:999)
+    for i in Iterators.reverse(100:n)
+        for j in Iterators.reverse(100:n)
             n = i * j
             if n > max && isPalendrome(n)
                 max = n
@@ -134,11 +150,14 @@ function prob4()
     max
 end
 
-prob4()
+print(prob4())
 
 # ------------------------------------------------------------------------------
 
-function is_divis(n)
+function is_divis_under_20(n)
+    """
+    Checks if n is divisible by the numbers less than 20
+    """
     s = 1:20
     devis = true
     for i in s
@@ -150,8 +169,12 @@ function is_divis(n)
 end
 
 function prob5()
+    """
+    Cheap iterative method for finding the smallest
+        number divisible by numbers less than 20
+    """
     prod = 20
-    while !is_divis(prod)
+    while !is_divis_under_20(prod)
         prod += 1
     end
     prod
@@ -161,10 +184,13 @@ print(prob5())
 
 # ------------------------------------------------------------------------------
 
-function prob6()
+function prob6(n=100)
+    """
+    Finds the difference between the sum of the squares and square of the sums under n
+    """
     sum = 0
     sqr_sum = 0
-    for i = 1:100
+    for i = 1:n
         sum += i
         sqr_sum += i^2
     end
@@ -175,11 +201,14 @@ print(prob6())
 
 # ------------------------------------------------------------------------------
 
-function prob7()
+function prob7(n=10001)
+    """
+    find the nth prime
+    """
     n = 2
     p = 0
     primes = [2]
-    while length(primes) < 10001
+    while length(primes) < n
         n += 1
         if (isPrime(n))
             print(isPrime(n))
@@ -196,35 +225,31 @@ print(prob7()[end])
 
 # ------------------------------------------------------------------------------
 
-function prob8()
-    s="7316717653133062491922511967442657474235534919493496983520312774506326239578318016984801869478851843858615607891129494954595017379583319528532088055111254069874715852386305071569329096329522744304355766896648950445244523161731856403098711121722383113622298934233803081353362766142828064444866452387493035890729629049156044077239071381051585930796086670172427121883998797908792274921901699720888093776657273330010533678812202354218097512545405947522435258490771167055601360483958644670632441572215539753697817977846174064955149290862569321978468622482839722413756570560574902614079729686524145351004748216637048440319989000889524345065854122758866688116427171479924442928230863465674813919123162824586178664583591245665294765456828489128831426076900422421902267105562632111110937054421750694165896040807198403850962455444362981230987879927244284909188845801561660979191338754992005240636899125607176060588611646710940507754100225698315520005593572972571636269561882670428252483600823257530420752963450"
+function prob8(s = "7316717653133062491922511967442657474235534919493496983520312774506326239578318016984801869478851843858615607891129494954595017379583319528532088055111254069874715852386305071569329096329522744304355766896648950445244523161731856403098711121722383113622298934233803081353362766142828064444866452387493035890729629049156044077239071381051585930796086670172427121883998797908792274921901699720888093776657273330010533678812202354218097512545405947522435258490771167055601360483958644670632441572215539753697817977846174064955149290862569321978468622482839722413756570560574902614079729686524145351004748216637048440319989000889524345065854122758866688116427171479924442928230863465674813919123162824586178664583591245665294765456828489128831426076900422421902267105562632111110937054421750694165896040807198403850962455444362981230987879927244284909188845801561660979191338754992005240636899125607176060588611646710940507754100225698315520005593572972571636269561882670428252483600823257530420752963450")
+    """
+    Finds the thirteen adjacent digits in the 1000-digit number that have the greatest product of  s
+    """
         max = 0
     for i = 1:length(s)-12
         p = 1
         for j = i:i+12
             p *= parse(Int64, s[j])
-            # print(parse(Int64, s[j]), " ")
-            # print(p, "p")
-            # print("\n")
         end
         if (p > max)
             max = p
         end
-        # print(p)
-        # break
     end
     max
 end
 
 print(prob8())
 
-for i = 1:1+13
-    print(i)
-end
-
 # ------------------------------------------------------------------------------
 
 function is_pythagorean(n)
+    """Returns true or false if the given number
+    is a hypotenuse and its corrisponding sides
+    """
     is_p = false
     c = n
     tups = [(0,0,c)]
@@ -242,6 +267,9 @@ end
 print(is_pythagorean(100))
 
 function prob9()
+    """
+    Finds the Pythagorean triplet such that a + b + c = 1000
+    """
     result = 1
     for i in Iterators.reverse(1:1000)
         is_p, tups = is_pythagorean(i)
@@ -257,3 +285,17 @@ function prob9()
 end
 
 print(prob9())
+
+
+# ------------------------------------------------------------------------------
+
+
+function prob10(n=2000000)
+    """
+    Finds the sum of the primes below n
+    """
+    primes = genPrimes(n)
+    sum(primes)
+end
+
+print(prob10())
