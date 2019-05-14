@@ -122,9 +122,10 @@ function get_factors(n)
     factors
 end
 
-print(get_factors(6))
-
 function prob12()
+    """
+    Get the triangle number with more than 500 factors
+    """
     i = 1
     n = i
     factors = get_factors(n)
@@ -133,7 +134,6 @@ function prob12()
         i += 1
         n += i
         factors = get_factors(n)
-        # print(n, " ", factors, "\n")
     end
     n
 end
