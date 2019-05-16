@@ -250,3 +250,30 @@ function prob13()
 end
 
 print(prob13())
+
+# ------------------------------------------------------------------------------
+
+function prob14()
+    longest = 0
+    number = 1
+    for i = 2:1000000
+        count = 0
+        n = i
+        while n != 1
+            if n % 2 == 0
+                n /= 2
+            else
+                n = 3n + 1
+            end
+            count += 1
+
+        end
+        if count > longest
+            longest = count
+            number = i
+        end
+    end
+    longest, number
+end
+
+print(prob14())
