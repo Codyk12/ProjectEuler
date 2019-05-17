@@ -277,3 +277,21 @@ function prob14()
 end
 
 print(prob14())
+
+# ------------------------------------------------------------------------------
+using LinearAlgebra
+
+function prob15(n = 20)
+    """
+    Finds the nuber of lattice paths through an nxn grid
+    """
+    m = ones((n+1,n+1))
+    for i = 2:n+1
+        for j = 2:n+1
+            m[i,j] = m[i-1,j] + m[i,j-1]
+        end
+    end
+    m[end,end]
+end
+
+print(prob15())
