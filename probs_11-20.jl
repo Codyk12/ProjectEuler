@@ -295,3 +295,16 @@ function prob15(n = 20)
 end
 
 print(prob15())
+
+# ------------------------------------------------------------------------------
+
+function prob16()
+    s = string(2^BigInt(1000))
+    sum = 0
+    for c in s
+        sum += Int(c)
+    end
+    sum
+end
+
+print(prob16())
