@@ -420,3 +420,46 @@ function prob18()
 end
 
 print(prob18())
+
+# ------------------------------------------------------------------------------
+
+function prob19(start_year = 1901, end_year=2000, DoW=2)
+    """
+    DoW: start
+    finds sundays on the first of the month from start_year to end_year
+    sunday = 1st day of the week
+
+    """
+    year_months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    leap_year_months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+    sundays = 0
+    for i = start_year:end_year
+        println("_______________",i,"_______________")
+        if ( (i % 100 == 0 && i % 400 == 0) )
+            for month in leap_year_months
+                DoW = (month+DoW) % 7
+                if (DoW == 0)
+                    sundays += 1
+                end
+            end
+        elseif (i % 4 == 0 && i % 100 != 0)
+            for month in leap_year_months
+                DoW = (month+DoW) % 7
+                if (DoW == 0)
+                    sundays += 1
+                end
+            end
+        else
+            for month in year_months
+                DoW = (month+DoW) % 7 
+                if (DoW == 0)
+                    sundays += 1
+                end
+            end
+        end
+    end
+    sundays
+end
+
+print(prob19())
