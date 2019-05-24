@@ -452,7 +452,7 @@ function prob19(start_year = 1901, end_year=2000, DoW=2)
             end
         else
             for month in year_months
-                DoW = (month+DoW) % 7 
+                DoW = (month+DoW) % 7
                 if (DoW == 0)
                     sundays += 1
                 end
@@ -463,3 +463,14 @@ function prob19(start_year = 1901, end_year=2000, DoW=2)
 end
 
 print(prob19())
+
+# ------------------------------------------------------------------------------
+
+function prob20(n=100)
+    """
+    Finds the sum of the digits of the factorial of n
+    """
+    sum([parse(Int, s) for s in string(factorial(BigInt(100)))])
+end
+
+print(prob20())
