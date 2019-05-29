@@ -10,17 +10,18 @@ function prob1(n)
     end
     sum(nums)
 end
-prob1(1000)
+
+print(prob1(1000))
 
 # ------------------------------------------------------------------------------
 
-function prob2()
+function prob2(n=4e6)
     """
     Problem 2 for project Euler
     """
     fibs = [1, 2]
     sum = 2
-    while fibs[2] < 4e6
+    while fibs[2] < n
         temp = fibs[2]
         fibs[2] = fibs[1] + fibs[2]
         fibs[1] = temp
@@ -98,8 +99,7 @@ function prob3(n)
 end
 
 prob3(13195)
-n = prob3(600851475143)
-print(n)
+print(prob3(600851475143))
 
 # ------------------------------------------------------------------------------
 
