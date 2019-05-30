@@ -111,7 +111,7 @@ function prob24(n=1000000)
     l = length(nums)
     i = 0
     num = 0
-    
+
     # Determine which starting number produces closest to n
     for j in nums
         num = j
@@ -129,3 +129,22 @@ function prob24(n=1000000)
 end
 
 prob24()
+
+# -----------------------------------------------------------------------------
+
+function prob25(n=1000)
+    """
+    Finds the fib number with n digits
+    """
+    index = 1
+    fibs = [BigInt(0),BigInt(1)]
+    while length(string(fibs[2])) < n
+        new = BigInt(fibs[1]) + fibs[2]
+        fibs[1] = fibs[2]
+        fibs[2] = new
+        index += 1
+    end
+    println("Index of the digit with ", n, " digits: ", index)
+end
+
+prob25()
