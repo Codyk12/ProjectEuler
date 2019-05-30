@@ -97,3 +97,35 @@ end
 
 
 print(prob23())
+
+
+# -----------------------------------------------------------------------------
+
+using Combinatorics
+
+function prob24(n=1000000)
+    """
+    Finds nth lexicographic permutation of the digits 1-9
+    """
+    nums = [0,1,2,3,4,5,6,7,8,9]
+    l = length(nums)
+    i = 0
+    num = 0
+    
+    # Determine which starting number produces closest to n
+    for j in nums
+        num = j
+        if (i+factorial(l-1) > n)
+            break
+        else
+            i += factorial(l-1)
+        end
+    end
+
+    # Removes the starting number for faster permutation calc
+    deleteat!(nums, num+1)
+    println(n, "th Permutation: ", num, collect(permutations(nums))[n-i]...)
+
+end
+
+prob24()
