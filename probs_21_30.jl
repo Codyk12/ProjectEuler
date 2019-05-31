@@ -148,3 +148,40 @@ function prob25(n=1000)
 end
 
 prob25()
+
+# -----------------------------------------------------------------------------
+using Decimals
+
+function prob26(n=1000)
+    """
+    Finds the unit fraction with denominator less than n with the longest repeating decimal
+    """
+    sequenceLength = 0
+
+    for i = 2:n
+
+        if (sequenceLength >= i)
+            print(sequenceLength)
+            break
+        end
+
+        remainders = [i]
+        val = 1
+        position = 0
+        # Long division:
+        println("------------ ", i, " ---------")
+        while remainders[val] == 0 && val != 0
+            remainders[val] = position
+            val *= 10
+            val %= i
+            position += 1
+        end
+
+        if (position - remainders[val] > sequenceLength)
+            sequenceLength = position - remainders[val]
+        end
+    end
+    print(sequenceLength)
+end
+
+prob26()
