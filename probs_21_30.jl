@@ -185,3 +185,69 @@ function prob26(n=1000)
 end
 
 prob26()
+
+
+# -----------------------------------------------------------------------------
+
+
+function isPrime(n)
+    """
+    Determines if n is a prime
+    """
+    prime = true
+    for i = 2:sqrt(n)
+        d = n / i
+        if d == round(d)
+            prime = false
+            break
+        end
+    end
+    prime
+end
+
+function prob27(m=1000)
+    max = 0
+    a_b = (0,0)
+    for a = -m:m
+        for b = -m:m
+            n = 0
+            quad = b
+            while quad % 2 != 0 && isPrime(abs(quad))
+                n += 1
+                quad = n^2 + a*n + b
+            end
+            if n > max
+                max = n
+                a_b = (a,b)
+            end
+        end
+    end
+    println(prod(a_b))
+end
+
+prob27()
+
+# -----------------------------------------------------------------------------
+
+function prob28(n=1001)
+    """
+    Calculates the sum of the diagonals for a spiral matrix of nxn dimensions
+    """
+    val = n^2
+    sum = 0
+    side_length = n
+    while val > 1
+        for j = 1:4
+            sum += val
+            val -= (side_length-1)
+            if (val <= 1)
+                break
+            end
+        end
+        side_length -= 2
+    end
+    sum += 1
+    println("Sum:", sum)
+end
+
+prob28()
