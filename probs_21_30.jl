@@ -251,3 +251,21 @@ function prob28(n=1001)
 end
 
 prob28()
+
+# -----------------------------------------------------------------------------
+
+function prob29(a=[2,100], b=[2,100])
+    """
+    Finds the sequence of unique a^b for all a and all b
+    """
+    results = Set()
+    for i = a[1]:a[2]
+        for j = b[1]:b[2]
+            push!(results, BigInt(i)^j)
+        end
+    end
+    println("Length of unique sequence: ", length(results))
+end
+
+
+prob29()
