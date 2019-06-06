@@ -272,14 +272,15 @@ prob29()
 
 # -----------------------------------------------------------------------------
 
-function prob30(n=5)
+function prob30(n=3)
     """
     Finds the sum of all the numbers that can be written
     as the sum of fifth powers of their digits.
     """
     results = []
     start_num = 2
-    end_num = 1000000
+    end_num = 1
+    for i = 1:n end_num *= 10 end
     cont = false
     while !cont
         pushed = false
@@ -304,4 +305,4 @@ function prob30(n=5)
     end
 end
 
-@time prob30(5)
+@time prob30(6)
