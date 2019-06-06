@@ -269,3 +269,39 @@ end
 
 
 prob29()
+
+# -----------------------------------------------------------------------------
+
+function prob30(n=5)
+    """
+    Finds the sum of all the numbers that can be written
+    as the sum of fifth powers of their digits.
+    """
+    results = []
+    start_num = 2
+    end_num = 1000000
+    cont = false
+    while !cont
+        pushed = false
+        for i = 2:end_num
+            temp = 0
+            for c in string(i)
+                num = parse(Int, c)
+                temp += BigInt(num)^n
+            end
+            if temp == i
+                pushed = true
+                push!(results, i)
+            end
+        end
+        cont = pushed
+        start_num = end_num
+        end_num = BigInt(end_num)*10
+    end
+    println("that can be written as the sum of ", n, "th powers of their digits:", results)
+    if length(results) > 1
+        println("The sum of those numbers: ", sum(results))
+    end
+end
+
+@time prob30(5)
