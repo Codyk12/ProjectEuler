@@ -299,7 +299,7 @@ function prob30(n=3)
         start_num = end_num
         end_num = BigInt(end_num)*10
     end
-    println("that can be written as the sum of ", n, "th powers of their digits:", results)
+    println("Numbers that can be written as the sum of ", n, "th powers of their digits:", results)
     if length(results) > 1
         println("The sum of those numbers: ", sum(results))
     end
