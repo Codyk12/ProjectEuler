@@ -54,3 +54,38 @@ function prob32(m0, m1, n0, n1)
 end
 
 println("Pandigital for length 9: ", prob32(1,9,1234,9876) + prob32(12, 98, 123, 987))
+
+
+#--------------------------------------------------------------------------------------
+
+function check_digit_cancelling(n, d)
+    r = Rational(n, d)
+    n = string(n)
+    d = string(d)
+    if n[1] == d[1] && Rational(parse(Int, n[2]), parse(Int, d[2])) == r
+        return true
+    elseif n[1] == d[2] && Rational(parse(Int, n[2]), parse(Int, d[1])) == r
+        return true
+    elseif n[2] == d[1] && Rational(parse(Int, n[1]), parse(Int, d[2])) == r
+        return true
+    elseif n[2] == d[2] && Rational(parse(Int, n[1]), parse(Int, d[1])) == r
+        return true
+    end
+    false
+end
+
+
+function prob33()
+    denom = 1
+    num = 1
+    for d = 11:99, n = 10:d-1
+        if (n % 10 != 0 && d % 10 != 0) && check_digit_cancelling(n, d)
+            denom *= d
+            num *= n
+        end
+    end
+    print("Product of GDC of 4 special fractions: ", Rational(num,denom).den)
+end
+
+
+@time prob33()
