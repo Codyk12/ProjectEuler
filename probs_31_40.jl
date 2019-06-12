@@ -89,3 +89,21 @@ end
 
 
 @time prob33()
+
+#--------------------------------------------------------------------------------------
+
+
+function prob34()
+    """
+    Finds the sum of all numbers which are equal to the sum of the factorial of their digits.
+    """
+    s = 0
+    for i = 3:100000
+        if i == sum([factorial(parse(Int,c)) for c in string(i)])
+            s += i
+        end
+    end
+    println("Sum of special sum of factorial digits numbers: ", s)
+end
+
+@time prob34()
