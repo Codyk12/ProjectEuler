@@ -107,3 +107,49 @@ function prob34()
 end
 
 @time prob34()
+
+#--------------------------------------------------------------------------------------
+using Combinatorics
+
+function isPrime(n)
+    """
+    Determines if n is a prime
+    """
+    prime = true
+    for i = 2:sqrt(n)
+        d = n / i
+        if d == round(d)
+            prime = false
+            break
+        end
+    end
+    prime
+end
+
+function circular(n)
+    n = string(n)
+    circ = true
+    for (i,c) in enumerate(n)
+        if !isPrime(parse(Int, n[i:end]*n[1:i-1]))
+            return false
+        end
+    end
+    circ
+end
+
+function prob35(n=1000000)
+    """
+    Finds circular primes are there below n
+    """
+    cnt = 4
+    for i = 11:n
+        if i % 2 != 0
+            if circular(i)
+                cnt += 1
+            end
+        end
+    end
+    print(cnt)
+end
+
+prob35()
