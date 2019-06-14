@@ -110,23 +110,11 @@ function isPalendrome(n)
     str = string(n)
     l = length(str)
 
-    # if the number is of even length
-    if length(str) % 2 == 0
-        pal = true
-        for i = 1:Int(l/2)
-            if str[i] != str[end-i+1]
-                pal = false
-                return pal
-            end
-        end
-    # number is of odd length
-    else
-        pal = true
-        for i = 1:Int((l-1)/2)
-            if str[i] != str[end-i+1]
-                pal = false
-                return pal
-            end
+    pal = true
+    for i = 1:Int(floor(l/2))
+        if str[i] != str[end-i+1]
+            pal = false
+            return pal
         end
     end
     pal

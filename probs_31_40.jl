@@ -109,7 +109,6 @@ end
 @time prob34()
 
 #--------------------------------------------------------------------------------------
-using Combinatorics
 
 function isPrime(n)
     """
@@ -143,13 +142,42 @@ function prob35(n=1000000)
     """
     cnt = 4
     for i = 11:n
-        if i % 2 != 0
-            if circular(i)
-                cnt += 1
-            end
+        if i % 2 != 0 && circular(i)
+            cnt += 1
         end
     end
-    print(cnt)
+    print("Number of circular primes under ", n, ": ", cnt)
 end
 
-prob35()
+@time prob35()
+
+#--------------------------------------------------------------------------------------
+
+function isPalendrome(n)
+    """
+    Checks if number is palendrome
+    """
+    pal = true
+    for i = 1:Int(floor(length(n)/2))
+        if n[i] != n[end-i+1]
+            pal = false
+            return pal
+        end
+    end
+    pal
+end
+
+function prob36(n=1000000)
+    """
+    Finds sum of all numbers, less than n, which are palindromic in base 10 and base 2.
+    """
+    s = 0
+    for i = 1:n
+        if isPalendrome(string(i)) && isPalendrome(string(i, base=2))
+            s += i
+        end
+    end
+    println("Sum of Palindromic in base 10 and base 2 less than ", n, ": ", s)
+end
+
+@time prob36()
