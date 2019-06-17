@@ -110,10 +110,11 @@ end
 
 #--------------------------------------------------------------------------------------
 
-function isPrime(n)
+function isPrime(n::Int)
     """
     Determines if n is a prime
     """
+    if n == 1 return false end
     prime = true
     for i = 2:sqrt(n)
         d = n / i
@@ -181,3 +182,44 @@ function prob36(n=1000000)
 end
 
 @time prob36()
+
+
+#--------------------------------------------------------------------------------------
+
+function prob37()
+    """
+    Calculates the sum primes that are truncated primes both left and right
+    """
+    num = 0
+    s = 0
+    i = 23
+    while num < 11
+        si = string(i)
+        if (i % 2 != 0 && isPrime(i) && left_trunc(si) && right_trunc(si))
+            num += 1
+            s += i
+        end
+        i += 1
+    end
+    print("Sum of truncated primes: ", s)
+end
+
+function left_trunc(n::String)
+    for i = 1:length(n)
+        if !(isPrime(parse(Int,n[i:end])))
+            return false
+        end
+    end
+    true
+end
+
+function right_trunc(n::String)
+    for i = 1:length(n)-1
+        if !(isPrime(parse(Int,n[1:end-i])))
+            return false
+        end
+    end
+    true
+end
+
+@time prob37()
