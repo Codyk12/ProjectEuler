@@ -115,15 +115,13 @@ function isPrime(n::Int)
     Determines if n is a prime
     """
     if n == 1 return false end
-    prime = true
     for i = 2:sqrt(n)
         d = n / i
         if d == round(d)
-            prime = false
-            break
+            return false
         end
     end
-    prime
+    true
 end
 
 function circular(n)
