@@ -19,17 +19,13 @@ end
 prob31()
 
 #--------------------------------------------------------------------------------------
-function isPandigital(num)
+function isPandigital(num::String)
     s = ['1','2','3','4','5','6','7','8','9']
-    if (length(num) != n)
-        return false
-    else
-        flag = true
-        for c in s
-            if !(c in num)
-                flag = false
-                break
-            end
+    flag = true
+    for c in s
+        if !(c in num)
+            flag = false
+            break
         end
     end
     flag
@@ -221,3 +217,52 @@ function right_trunc(n::String)
 end
 
 @time prob37()
+
+#--------------------------------------------------------------------------------------
+
+function prob38()
+    """
+    the largest 1 to 9 pandigital 9-digit number that can be formed as the concatenated product of an integer with (1,2, … , n) where n > 1
+    """
+    for i in Iterators.reverse(9182:9876)
+        n = string(i) * string(i*2)
+        if isPandigital(n)
+            println("Largest Pandigital concat number: ", n)
+            break
+        end
+    end
+end
+
+prob38()
+
+#--------------------------------------------------------------------------------------
+function pathag_triples(n)
+    count = 0
+    for a = 1:round(n/2)
+        for b = 1:round(n/2)
+            c = sqrt(a^2 + b^2)
+            if round(c) == c && (a + b + c == n)
+                count += 1
+            end
+        end
+    end
+    count
+end
+
+function prob39(n=1000)
+    """
+    Number with most pathagorian triples
+    """
+    max = 0
+    max_n = 0
+    for i = 1:n
+        m = pathag_triples(i)
+        if m > max
+            max = m
+            max_n = i
+        end
+    end
+    println("Number with most pathagorian triples: ", max_n)
+end
+
+@time prob39()
