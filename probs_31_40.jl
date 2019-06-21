@@ -266,3 +266,37 @@ function prob39(n=1000)
 end
 
 @time prob39()
+
+#--------------------------------------------------------------------------------------
+
+function prob40(ds=[1,10,100,1000,10000,100000,1000000])
+    """
+    Gets the product of the dth digits of the Champernowne's constant
+    """
+    # Generate the range of the number of digits
+    ones = (1,9)
+    tens = (10,90*2+9)
+    hundreds = ((90*2+9)+1, 900*3+(90*2+9))
+    thousands = (900*3+(90*2+9)+1, 9000*4+(900*3+(90*2+9)))
+    tenthou = (9000*4+(900*3+(90*2+9))+1, 90000*5+(9000*4+(900*3+(90*2+9))))
+    hunthou = ((90000*5+(9000*4+(900*3+(90*2+9))))+1, 900000*6+(90000*5+(9000*4+(900*3+(90*2+9)))))
+    ranges = [ones,tens,hundreds,thousands,tenthou,hunthou]
+    prod = 1
+    for d in ds
+        for (i,r) in enumerate(ranges)
+            if (d >= r[1] && d < r[2])
+                n = Int(ceil(((d - (r[1]-1)) / i) + (10^(i-1))-1))
+                index = (d - (r[1]-1)) % i
+                if (index == 0)
+                    prod *= 1
+                else
+                    prod *= parse(Int, string(n)[index])
+                end
+            end
+        end
+
+    end
+    println("Product of the dth digits of Champernowne's constant: ", prod)
+end
+
+@time prob40()
