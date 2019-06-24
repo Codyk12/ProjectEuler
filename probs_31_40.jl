@@ -19,16 +19,14 @@ end
 prob31()
 
 #--------------------------------------------------------------------------------------
-function isPandigital(num::String)
+function ispandigital(num::String)
     s = ['1','2','3','4','5','6','7','8','9']
-    flag = true
     for c in s
         if !(c in num)
-            flag = false
-            break
+            return false
         end
     end
-    flag
+    true
 end
 
 function prob32(m0, m1, n0, n1)
@@ -41,7 +39,7 @@ function prob32(m0, m1, n0, n1)
         for j = n0:n1
             num = i * j
             n = string(num) * string(i) * string(j)
-            if isPandigital(n, 9)
+            if ispandigital(n, 9)
                 push!(results, num)
             end
         end
@@ -226,7 +224,7 @@ function prob38()
     """
     for i in Iterators.reverse(9182:9876)
         n = string(i) * string(i*2)
-        if isPandigital(n)
+        if ispandigital(n)
             println("Largest Pandigital concat number: ", n)
             break
         end

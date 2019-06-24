@@ -190,19 +190,19 @@ prob26()
 # -----------------------------------------------------------------------------
 
 
-function isPrime(n)
+function isprime(n)
     """
     Determines if n is a prime
     """
-    prime = true
+    if n % 2 == 0
+        return false
     for i = 2:sqrt(n)
         d = n / i
         if d == round(d)
-            prime = false
-            break
+            return false
         end
     end
-    prime
+    true
 end
 
 function prob27(m=1000)
@@ -212,7 +212,7 @@ function prob27(m=1000)
         for b = -m:m
             n = 0
             quad = b
-            while quad % 2 != 0 && isPrime(abs(quad))
+            while quad % 2 != 0 && isprime(abs(quad))
                 n += 1
                 quad = n^2 + a*n + b
             end
