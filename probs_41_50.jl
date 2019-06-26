@@ -98,3 +98,47 @@ function prob42(file="p042_words.txt")
 end
 
 @time prob42()
+
+
+# ------------------------------------------------------------------------
+using Combinatorics
+
+function substringprimediv(n::Array{Char})
+    n = join(n)
+    primes = [2, 3, 5, 7, 11, 13, 17]
+
+    for i = 2:length(n)-2
+        if !(parse(Int, n[i:i+2]) % primes[i-1] == 0)
+            return false
+        end
+        i += 1
+    end
+    true
+end
+
+substringprimediv(1406357289)
+
+function ispandigital(num::Vector{Char},n)
+    s = [Char(i + '0') for i = 0:n]
+    for c in s
+        if !(c in num)
+            return false
+        end
+    end
+    true
+end
+
+function prob43(nums = ['0','1','2','3','4','5','6','7','8','9'])
+    """
+    Finds pandigital of digits nums with substrings divisible by primes
+    """
+    s = 0
+    for n in permutations(nums)
+        if ispandigital(n, 9) && substringprimediv(n)
+            s += parse(Int, join(n))
+        end
+    end
+    println("Sum of primesubstring property pandigital numbers: ", s)
+end
+
+@time prob43()

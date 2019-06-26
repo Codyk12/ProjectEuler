@@ -32,7 +32,7 @@ end
 function prob32(m0, m1, n0, n1)
     """
     sum of all products whose multiplicand/multiplier/product identity can be
-    written as a 1 through 9 pandigital.
+    written as a 0 through 9 pandigital.
     """
     results = Set()
     for i = m0:m1
