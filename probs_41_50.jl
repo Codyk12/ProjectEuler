@@ -142,3 +142,38 @@ function prob43(nums = ['0','1','2','3','4','5','6','7','8','9'])
 end
 
 @time prob43()
+
+------------------------------------------------------------------------
+function pentagonal(i)
+    i*(3i - 1) / 2
+end
+
+function ispentagonal(i)
+    pos = (1 + sqrt(1 + 24*i))/6
+    if round(pos) == pos
+        return true
+    end
+    false
+end
+
+function prob44(cap = 10000)
+    """
+    finds the pair of pentagonal numbers that are closest
+    and sum and diff are also pentagonal
+    """
+    for i = 1:cap
+        n = pentagonal(i)
+        for j = 1:i-1
+            m = pentagonal(j)
+            s =  n + m
+            d = n - m
+            if ispentagonal(s) && ispentagonal(d)
+                min_diff = d
+                println("Difference: ", Int(min_diff))
+                return
+            end
+        end
+    end
+end
+
+@time prob44()
