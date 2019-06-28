@@ -150,10 +150,7 @@ end
 
 function ispentagonal(i)
     pos = (1 + sqrt(1 + 24*i))/6
-    if round(pos) == pos
-        return true
-    end
-    false
+    round(pos) == pos ? true : false
 end
 
 function prob44(cap = 10000)
@@ -177,3 +174,25 @@ function prob44(cap = 10000)
 end
 
 @time prob44()
+
+
+# ------------------------------------------------------------------------
+
+function hexagonal_number(n)
+    n*(2n-1)
+end
+
+function prob45()
+    i = 143
+    n = hexagonal_number(i)
+    while true
+        i += 1
+        n = hexagonal_number(i)
+        if ispentagonal(n)
+            break
+        end
+    end
+    println(Int(n), " ", i)
+end
+
+@time prob45()
