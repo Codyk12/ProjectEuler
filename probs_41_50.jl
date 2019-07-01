@@ -287,3 +287,15 @@ function prob47()
 end
 
 @time prob47()
+
+# ------------------------------------------------------------------------
+
+function prob48()
+    sum = 0
+    for i = 1:1000
+        sum += BigInt(i)^i
+    end
+    print("Last ten digits Sum of self powers: ", string(sum)[end-9:end])
+end
+
+@time prob48()
