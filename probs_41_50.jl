@@ -247,3 +247,43 @@ function prob46()
 end
 
 @time prob46()
+
+
+# ------------------------------------------------------------------------
+function fuprimes(n, primes)
+    rem = n
+    uprimes = []
+    for i = 1:length(primes)
+        num = (rem / primes[i])
+        if round(num) == num
+            rem = num
+            push!(uprimes, primes[i])
+        end
+    end
+    length(uprimes) == 4
+end
+
+function prob47()
+    """
+    first 4 consecutive numbers to have 4 unique prime factors
+    """
+    cnt = 0
+    i = 100000
+    primes = gen_primes(1,50000)
+    sat = false
+    while !sat
+        i += 1
+        if fuprimes(i, primes)
+            if cnt == 3
+                break
+            else
+                cnt += 1
+            end
+        else
+            cnt = 0
+        end
+    end
+    println("First number in consecutive 4 unq primes: ", i-3)
+end
+
+@time prob47()
