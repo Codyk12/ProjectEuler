@@ -196,3 +196,54 @@ function prob45()
 end
 
 @time prob45()
+
+# ------------------------------------------------------------------------
+
+function isprime(n::Int)
+    """
+    Determines if n is a prime
+    """
+    if n == 1 return false end
+    for i = 2:sqrt(n)
+        d = n / i
+        if d == round(d)
+            return false
+        end
+    end
+    true
+end
+
+function gen_primes(m,n)
+    [i for i = m+1:n if isprime(i)]
+end
+
+function prob46()
+    """
+    smallest odd composite that cannot be written as the sum of a prime and twice a square
+    """
+    primes = [2,3,5,7,11,13,17,19,23,27,31]
+
+    i = 33
+
+    flag = true
+
+    while flag
+        i += 2
+        # println(i)
+        if !(isprime(i))
+            primes = vcat(primes, gen_primes(primes[end],i))
+            found = false
+            for j = Iterators.reverse(1:length(primes))
+                num = sqrt((i-primes[j])/2)
+                if num == round(num)
+                    found = true
+                    break
+                end
+            end
+            found ? continue : break
+        end
+    end
+    println("Smallest NOT goldbachs number: ",i)
+end
+
+@time prob46()
