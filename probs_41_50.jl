@@ -1,21 +1,19 @@
 using BenchmarkTools
 
-function isprime(n)
+function isprime(n::Int)
     """
     Determines if n is a prime
     """
-    if n % 2 == 0
-        return false
-    else
-        for i = 2:sqrt(n)
-            d = n / i
-            if d == round(d)
-                return false
-            end
+    if n == 1 return false end
+    for i = 2:sqrt(n)
+        d = n / i
+        if d == round(d)
+            return false
         end
     end
     true
 end
+
 
 function ispandigital(num::String,n)
     s = [Char(i + '0') for i = 1:n]
@@ -199,20 +197,6 @@ end
 
 # ------------------------------------------------------------------------
 
-function isprime(n::Int)
-    """
-    Determines if n is a prime
-    """
-    if n == 1 return false end
-    for i = 2:sqrt(n)
-        d = n / i
-        if d == round(d)
-            return false
-        end
-    end
-    true
-end
-
 function gen_primes(m,n)
     [i for i = m+1:n if isprime(i)]
 end
@@ -299,3 +283,29 @@ function prob48()
 end
 
 @time prob48()
+
+# ------------------------------------------------------------------------
+using Combinatorics
+
+function prob49()
+    """
+    finds increasing sequence of 3 numbers all primes and permutations of another
+    the same distance apart
+    """
+    primes = gen_primes(1000,9999)
+    for p in primes
+        perm = collect(permutations([c for c in string(p)]))
+        for prm in perm
+            n1 = parse(Int, join(prm))
+            if n1 in primes && n1 != p
+                diff = (p - n1)
+                n2 = (p + diff)
+                if n2 != p && ([c for c in string(n2)] in perm) && n2 in primes
+                    println("Concat sequence is: ", join(sort([n1, n2, p])))
+                end
+            end
+        end
+    end
+end
+
+@time prob49()
