@@ -198,7 +198,7 @@ end
 # ------------------------------------------------------------------------
 
 function gen_primes(m,n)
-    [i for i = m+1:n if isprime(i)]
+    [i for i = m:n if isprime(i)]
 end
 
 function prob46()
@@ -309,3 +309,35 @@ function prob49()
 end
 
 @time prob49()
+
+# ------------------------------------------------------------------------
+
+function prob50(n=1000)
+    """
+    finds largest prime less than  n that is the sum of consecutive primes
+    """
+    max = 2
+    p_num = 0
+    primes = gen_primes(2,n)
+    sums = [1]
+    for (i,p) in enumerate(primes)
+        push!(sums, sums[i] + primes[i])
+    end
+
+    for (i,p) in enumerate(primes)
+        for j = Iterators.reverse(1:i-1)
+            s = sums[i] - sums[j]
+            diff = i - j
+            if s > n
+                break
+            end
+            if diff > max && s in primes
+                max = diff
+                p_num = s
+            end
+        end
+    end
+    println("Prime with Longest consecutive sum below ", n, ": ", p_num, ", with ", max, " primes")
+end
+
+@time prob50(1000000)
