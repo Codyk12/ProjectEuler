@@ -88,3 +88,25 @@ function prob55()
 end
 
 @time prob55()
+
+
+#-------------------------------------------------------------------------------
+function digitsum(n)
+    sum([parse(Int, c) for c in string(n)])
+end
+
+
+function prob56(n=100)
+    max_sum = 0
+    for a = 1:n, b = 1:n
+        if a % 10 != 0
+            sum = digitsum(BigInt(a)^b)
+            if sum > max_sum
+                max_sum = sum
+            end
+        end
+    end
+    println("Max sum of digits of a^b (a,b<", n, "): ", max_sum)
+end
+
+@time prob56()
