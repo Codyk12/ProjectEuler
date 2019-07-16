@@ -91,6 +91,7 @@ end
 
 
 #-------------------------------------------------------------------------------
+
 function digitsum(n)
     sum([parse(Int, c) for c in string(n)])
 end
@@ -110,3 +111,34 @@ function prob56(n=100)
 end
 
 @time prob56()
+
+#-------------------------------------------------------------------------------
+
+function sqrt2_recurse(n, i)
+    """
+    Recurse for sqrt(2)
+    """
+    if i == n
+        return 1//BigInt(2)
+    else
+        return 1 // (2 + sqrt2_recurse(n, i+1))
+    end
+end
+
+function prob57(n=1000)
+    """
+    find number of fraction with numerator having more digits
+    than denominator in the first n iterations for sqrt(2)
+    """
+    cnt = 0
+    for i = 1:n
+        frac = 1//1 + sqrt2_recurse(i, 1)
+        if length(string(frac.num)) > length(string(frac.den))
+            cnt += 1
+        end
+    end
+    println("Num of numbers with larger numerator: ", cnt)
+
+end
+
+@time prob57()
