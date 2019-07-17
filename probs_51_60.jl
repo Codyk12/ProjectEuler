@@ -132,7 +132,7 @@ function prob57(n=1000)
     """
     cnt = 0
     for i = 1:n
-        frac = 1//1 + sqrt2_recurse(i, 1)
+        frac = 1 + sqrt2_recurse(i, 1)
         if length(string(frac.num)) > length(string(frac.den))
             cnt += 1
         end
@@ -142,3 +142,33 @@ function prob57(n=1000)
 end
 
 @time prob57()
+
+
+#-------------------------------------------------------------------------------
+using Primes
+
+function prob58(percent=.1)
+    """
+        Finds the side legnth of spiral numbers for the ratio of primes
+        to total diagonals is less than n
+    """
+    num = 1
+    primes = 0
+    diags = 1
+    side_length = 1
+    while true
+        side_length += 2
+        for i = 1:4
+            num+=(side_length-1)
+            isprime(num) && (primes += 1)
+            diags += 1
+        end
+        if primes / diags <= percent
+            break
+        end
+    end
+    println("Side length required for less than ", 100*percent, "% primes on diagonals: ",  side_length )
+
+end
+
+@time prob58()
