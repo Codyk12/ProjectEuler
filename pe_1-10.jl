@@ -200,8 +200,6 @@ function prob7(n=10001)
         n += 1
         if (isPrime(n))
             print(isPrime(n))
-            print(n)
-            print('\n')
             p += 1
             push!(primes, n)
         end

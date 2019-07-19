@@ -172,3 +172,96 @@ function prob58(percent=.1)
 end
 
 @time prob58()
+
+#-------------------------------------------------------------------------------
+
+function encrypt(message::Vector{Int}, key::String)
+    key = [Int(k) for k in key]
+    println(key)
+    n = length(key)
+    new_message = Vector{Int}()
+    i = 0
+    for m in message
+        i == 3 ? i = 1 : i += 1
+        println(i)
+        push!(new_message, m ⊻ key[i])
+    end
+    new_message
+end
+
+function readable(message::Vector{Int})
+    prod([Char(m) for m in message])
+end
+
+function intersections(piles)
+    inter = []
+    for (i,pile) in enumerate(piles)
+        push!(inter, intersect(pile...))
+    end
+    inter, [readable(i) for i in inter]
+end
+
+function isvalid_(message::Vector{Int}, keys::Vector{Int})
+    valid = vcat([32,33,34,39,40,41,44,45,46,63], collect(48:59), collect(65:90),collect(97:122))
+    key = prod([Char(k) for k in keys])
+    new_message = encrypt(message, prod([Char(k) for k in keys]))
+
+    if key == "god"
+        println("hey ", key)
+        # println(new_message)
+        println(readable(message))
+    end
+    for m in message
+        if !(m in valid)
+            key == "god" ? println("not in valid!! ",m) : nothing
+            return false
+        end
+    end
+    true
+end
+
+
+function prob59_(n=3, file="p059_cipher.txt")
+    str = map(x->parse(Int,x), split(read(open(file), String), ","))
+    println(str[1])
+    readable(encrypt(str, "god"))
+    # i = 0
+    # a, b, c = str[i+=1], str[i+=1], str[i+=1]
+    # for i = 97:122, j = 97:122, k = 97:122
+    #     if isvalid_(str, [i, j, k])
+    #         return i, j, k
+    #     end
+    # end
+    # print("woops")
+end
+
+prob59_()
+
+
+#
+# function prob59(n=3, file="p059_cipher.txt")
+#     str = map(x->parse(Int,x), split(read(open(file), String), ","))
+#     i = 0
+#     pile1 = Vector{Vector{Int}}()
+#     pile2 = Vector{Vector{Int}}()
+#     pile3 = Vector{Vector{Int}}()
+#     piles = [pile1,pile2,pile3]
+#     while i < length(str)
+#         println()
+#         for k = 1:3
+#             s = str[i+k]
+#             v = Vector{Int}()
+#             for j = 97:122
+#                 if (32 <= (s ⊻ j) <= 126)
+#                     push!(v, j)
+#                 end
+#             end
+#             push!(piles[k], v)
+#         end
+#         i += 3
+#     end
+#     intersections(piles)
+#
+# end
+#
+# @time piles = prob59()
