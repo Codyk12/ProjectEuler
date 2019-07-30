@@ -49,3 +49,10 @@ function prob92(n::Int = 10000000)
 end
 
 @time prob92()
+
+#-------------------------------------------------------------------------------
+function prob97()
+    println("Last 10 digits: ", string(28433*(BigInt(2)^7830457)+1)[end-9:end])
+end
+
+@time prob97()
