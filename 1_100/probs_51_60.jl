@@ -52,6 +52,185 @@ end
 
 #-------------------------------------------------------------------------------
 
+function winner(h1, h2)
+    type_rank = Dict()
+    type_rank["HC"] = 1
+    type_rank["1P"] = 2
+    type_rank["2P"] = 3
+    type_rank["3K"] = 4
+    type_rank["ST"] = 5
+    type_rank["FL"] = 6
+    type_rank["FH"] = 7
+    type_rank["4K"] = 8
+    type_rank["SF"] = 9
+    type_rank["RF"] = 10
+
+    card_rank = Dict()
+    card_rank['1'] = 2
+    card_rank['2'] = 3
+    card_rank['3'] = 4
+    card_rank['4'] = 5
+    card_rank['5'] = 6
+    card_rank['6'] = 7
+    card_rank['7'] = 8
+    card_rank['8'] = 9
+    card_rank['9'] = 10
+    card_rank['T'] = 11
+    card_rank['J'] = 12
+    card_rank['Q'] = 13
+    card_rank['K'] = 14
+    card_rank['A'] = 15
+
+    h1_t, num_1 = get_hand_type(h1, card_rank)
+    h2_t, num_2 = get_hand_type(h2, card_rank)
+
+    if type_rank[h2_t] < type_rank[h1_t]
+        return 1
+    elseif type_rank[h1_t] < type_rank[h2_t]
+        return 2
+    else
+        num_1 > num_2 && return 1
+        return higher_card(h1, h2, card_rank)
+    end
+end
+
+function higher_card(h1, h2, card_rank)
+    h1_cr = reverse!(sort!([card_rank[c[1]] for c in h1]))
+    h2_cr = reverse!(sort!([card_rank[c[1]] for c in h2]))
+    h1_cr > h2_cr ? 1 : 2
+end
+
+
+function get_hand_type(h, card_rank)
+    is, num = is_royal_flush(h)
+    is != "" && return is, num
+    is, num = is_straight_flush(h, card_rank)
+    is != "" && return is, num
+    is, num = is_4_kind(h, card_rank)
+    is != "" && return is, num
+    is, num = is_full_house(h, card_rank)
+    is != "" && return is, num
+    is, num = is_flush(h, card_rank)
+    is != "" && return is, num
+    is, num = is_straight(h, card_rank)
+    is != "" && return is, num
+    is, num = is_three_kind(h, card_rank)
+    is != "" && return is, num
+    is, num = is_two_pairs(h, card_rank)
+    is != "" && return is, num
+    is, num = is_one_pair(h, card_rank)
+    is != "" && return is, num
+    "HC", sort_by_rank(h,card_rank)[end]
+end
+
+function is_royal_flush(hand)
+    if prod([x in [c[1] for c in hand] for x in ['T', 'J', 'Q', 'K', 'A']]) && same_suit(hand)
+        return "RF", 15
+    end
+    "", 0
+end
+
+function is_straight_flush(hand, card_rank)
+    if straight(hand, card_rank) && same_suit(hand)
+        return "SF", sort_by_rank(hand,card_rank)[end]
+    end
+    "", 0
+end
+
+function is_4_kind(hand, card_rank)
+    h = sort_by_rank(hand, card_rank)
+    if (h[1] == h[2] == h[3] == h[4])
+        return "4K", h[1]
+    elseif (h[2] == h[3] == h[4] == h[5])
+        return "4k", h[2]
+    end
+    "", 0
+end
+
+function is_full_house(hand, card_rank)
+    h = sort_by_rank(hand, card_rank)
+    if (h[1] == h[2] == h[3] && h[4] == h[5]) || (h[1] == h[2] && h[3] == h[4] == h[5])
+        return "FH", [h[5], h[1]]
+    end
+    "", 0
+end
+
+function is_flush(hand, card_rank)
+    if same_suit(hand)
+        return "FL", sort_by_rank(hand,card_rank)[end]
+    end
+    "", 0
+end
+
+function is_straight(hand, card_rank)
+    if straight(hand, card_rank)
+        return "ST", sort_by_rank(hand,card_rank)[end]
+    end
+    "", 0
+end
+
+function is_three_kind(hand, card_rank)
+    h = sort_by_rank(hand, card_rank)
+    if (h[1] == h[2] == h[3]) || (h[2] == h[3] == h[4]) || (h[3] == h[4] == h[5])
+        return "3K", h[3]
+    end
+    "", 0
+end
+
+function is_two_pairs(hand, card_rank)
+    h = sort_by_rank(hand,card_rank)
+    cnt = 0
+    num = 0
+    for i = 1:length(h)-1
+        if (h[i] == h[i+1])
+            cnt += 1
+            num = h[i]
+        end
+    end
+    cnt == 2 && return "2P", num
+    "", 0
+end
+
+function is_one_pair(hand,card_rank)
+    h = sort_by_rank(hand,card_rank)
+    for i = 1:length(h)-1
+        if (h[i] == h[i+1])
+            return "1P", h[i]
+        end
+    end
+    "", 0
+end
+
+function same_suit(h)
+    (h[1][2] == h[2][2] == h[3][2] == h[4][2] == h[5][2])
+end
+
+function sort_by_rank(h, card_rank)
+    sort!([card_rank[c[1]] for c in h])
+end
+
+function straight(hand, card_rank)
+    h = sort_by_rank(hand, card_rank)
+    (h[1] == h[2]-1 == h[3]-2 == h[4]-3 == h[5]-4)
+end
+
+function prob54(file="./1_100/p054_poker.txt")
+    hnds = split(read(open(file), String), "\n")[1:end-1]
+    win_cnt = 0
+    for h in hnds
+        h1 = split(h[1:14], " ")
+        h2 = split(h[16:end], " ")
+        if winner(h1, h2) == 1
+            win_cnt += 1
+        end
+    end
+    println("Player One wins: ", win_cnt, " times")
+end
+
+@time prob54()
+
+#-------------------------------------------------------------------------------
+
 function ispalendrome(n::Integer)
     """
     Checks if number is palendrome
