@@ -1,3 +1,22 @@
+function prob71(m=1000000)
+    fracts = Set{Rational{Int64}}()
+    @time for d = 1:m
+        for n = 1:d-1
+            fract = n//d
+            fract > 3//7 && break
+            push!(fracts, fract)
+        end
+    end
+    sort!(fracts)
+    function two_fiths(a)
+        3//7 == a
+    end
+    println("Fraction to left of 3/7: ", fracts[findfirst(two_fiths, fracts) - 1])
+end
+
+@time prob71()
+
+
 function prob79(file="p079_keylog.txt")
     codes = split(read(open(file),String), "\n")[1:end-1]
     nums = Set()

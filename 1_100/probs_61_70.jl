@@ -39,3 +39,24 @@ function prob67(file="p067_triangle.txt")
 end
 
 prob67()
+
+#-------------------------------------------------------------------------------
+
+using Primes
+
+function prob69(n=1000000)
+    """
+    finds max ϕ(x) below n
+    """
+    result = 1
+    ps = primes(1,200)
+    for i = 1:n
+        if result * ps[i] > n
+            break
+        end
+        result = result * ps[i]
+    end
+    println(result)
+end
+
+@time prob69()
