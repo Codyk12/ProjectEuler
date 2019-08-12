@@ -282,7 +282,7 @@ using LinearAlgebra
 
 function prob15(n = 20)
     """
-    Finds the nuber of lattice paths through an nxn grid
+    Finds the number of lattice paths through an nxn grid
     """
     m = ones((n+1,n+1))
     for i = 2:n+1

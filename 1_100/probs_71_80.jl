@@ -8,14 +8,50 @@ function prob71(m=1000000)
         end
     end
     sort!(fracts)
-    function two_fiths(a)
+    function three_sevenths(a)
         3//7 == a
     end
-    println("Fraction to left of 3/7: ", fracts[findfirst(two_fiths, fracts) - 1])
+    println("Fraction to left of 3/7: ", fracts[findfirst(three_sevenths, fracts) - 1])
 end
 
 @time prob71()
 
+#-------------------------------------------------------------------------------
+
+
+function prob76(n=100)
+    cnt = 1
+    for i = 2:n
+        allowable_nums = reverse!(collect(1:i))
+
+        println(allowable_nums)
+
+        num_i = 1
+        sum = allowable_nums[1]
+        num = sum
+
+        while
+            if n % num
+
+        for num in allowable_nums[2:end]
+            println(sum)
+            if sum == n
+                println("equals")
+                cnt += 1
+                sum = allowable_nums[1]
+            elseif sum + num > n
+                continue
+            end
+            sum += num
+            println("added number:", num)
+        end
+
+    end
+    println("Number of sums to make ", n, ": ", cnt)
+end
+
+prob76(5)
+#-------------------------------------------------------------------------------
 
 function prob79(file="p079_keylog.txt")
     codes = split(read(open(file),String), "\n")[1:end-1]
@@ -54,6 +90,7 @@ function prob79(file="p079_keylog.txt")
     reorder(keys, [1,4,3,2,5,6,7,8])
 
 end
+
 
 function reorder(keys, order)
     println("\nor")
